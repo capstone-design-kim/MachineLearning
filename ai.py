@@ -12,7 +12,7 @@ connection = pymysql.connect(host='localhost',
                              database='capd',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
-
+#db에 맞게 값 수정해서 테스트
 user_id =1 
 contest_id =154
 
