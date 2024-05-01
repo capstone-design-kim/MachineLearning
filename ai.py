@@ -8,14 +8,14 @@ import matplotlib.pyplot as plt
 
 connection = pymysql.connect(host='localhost',
                              user='root',  
-                             password='db12', #비번
+                             password='990524', #비번
                              database='capd', #db이름
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
 
 # 사용자 및 대회 ID
-user_id = 2
-contest_id = 154
+user_id = 1
+contest_id = 28
 
 try:
     with connection.cursor() as cursor:
