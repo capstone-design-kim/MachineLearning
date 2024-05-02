@@ -253,6 +253,8 @@ plt.legend()  # 범례 표시
 plt.tight_layout()  # 그래프 간격 조정
 plt.show()
 
+
+
 # 상위 10명의 id 추출. 10명이 안될 경우 정렬만 수행
 top10_indices = []
 if len(weighted_similarities) > 10 :
@@ -262,25 +264,17 @@ else :
 # 상위n명의 정보 출력
 
 json_list = []
-for idx in top10_indices :
-    print("상대방 id : ", other_people_formatted[idx][0], '최종 유사도 : ', weighted_similarities[idx])
-    #JSON 만들 id 리스트로 결합. 단, 유사도가 0일 경우에는 리스트에 추가하지 않음.
-    if weighted_similarities[idx] != 0 :
-        json_list.append(other_people_formatted[idx][0])
 
-print(json_list)
-
-
-top10_user_ids = [other_people_formatted[i][0] for i in top10_indices]
-
-top3_users_json = [{"rank": i+1, "user_id": user_id} for i, user_id in enumerate(top10_user_ids)]
+for idx in top10_indices:
+    other_user_id  = other_people_formatted[idx][0]
+    print("상대방 id:", other_user_id , ', 최종 유사도:', weighted_similarities[idx])
+    if weighted_similarities[idx] != 0:
+        json_list.append({"user_id": other_user_id })
 
 # JSON 파일명 생성
 json_filename = f"{contest_id}_{user_id}.json"
-# 상위 3명의 id를 JSON 파일로 저장
-with open(json_filename, 'w') as json_file:
-    json.dump(top10_user_ids, json_file)
+json_data = [{"rank": rank, "user_id": user_info["user_id"]} for rank, user_info in enumerate(json_list[:10], start=1)]
 
-# 상위 3명의 정보 출력
-for idx in top10_indices :
-    print("상대방 id : ", other_people_formatted[idx][0], ', 최종 유사도 : ', weighted_similarities[idx])
+# 상위 10명의 id를 JSON 파일로 저장
+with open(json_filename, 'w') as json_file:
+    json.dump(json_data, json_file)
